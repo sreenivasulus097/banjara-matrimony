@@ -23,8 +23,8 @@ const SignIn = () => {
       }}
     >
       {({ errors, touched, isValid, dirty }) => (
-        <Form className="flex w-full justify-start  mt-3 ">
-          <div className="w-1/3  mr-5">
+        <Form className="md:flex w-full md:justify-start  mt-3 ">
+          <div className="w-full md:w-1/3 mb-2 md:mb-0 md:mr-5">
             <Field
               className="w-[100%] h-10 max-w-xs p-1.5 rounded-md border border-gray-300"
               id="usrname"
@@ -36,7 +36,7 @@ const SignIn = () => {
               errorMsg={errors.username}
             />
           </div>
-          <div className="w-1/3 mr-5">
+          <div className="w-full md:w-1/3 md: mr-5">
             <Field
               className="w-[100%] h-10 max-w-xs mr-5 p-1.5 rounded-md border border-gray-300"
               id="password"
@@ -48,8 +48,21 @@ const SignIn = () => {
               errorMsg={errors.password}
             />
           </div>
+
+          <div className="block md:hidden form-control w-full max-w-xs mr-5">
+            <label className="label cursor-pointer">
+              <input
+                type="checkbox"
+                className="checkbox checkbox-xs baseline align-middle"
+              />
+              <span className="label-text baseline ml-1 align-middle">
+                Keep me logged in
+              </span>
+            </label>
+          </div>
+
           <button
-            className="flex h-10 w-1.5/12  w-[10%] bg-primaryColor  rounded items-center px-5 font-bold"
+            className="mt-3 md:mt-0 ml-[30%] md:ml-0 h-10 w-1.5/12  w-[30%] md:w-[12%] bg-primaryColor  rounded items-center px-5 font-bold"
             type="submit"
           >
             Log In

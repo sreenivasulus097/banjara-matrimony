@@ -10,10 +10,10 @@ const signUpHandler = () => {};
 
 const SignUp = (props: Props) => {
   return (
-    <div className="container-xl  pb-0 self-center flex">
+    <div className=" container-xl  pb-0 self-center flex">
       <div className="relative">
         <Image
-          src="/images/matrimony-banner.jpg"
+          src="/images/matrimony-banner1.jpg"
           alt="Banjara Matrimony"
           width={1350}
           height={750}

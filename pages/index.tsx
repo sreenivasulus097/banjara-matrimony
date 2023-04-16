@@ -12,7 +12,9 @@ export default function Home() {
   return (
     <>
       <Layout pageTitle="Banjara - Matrimony">
-        <SignUp />
+        <div className="hidden md:block">
+          <SignUp />
+        </div>
       </Layout>
     </>
   );
