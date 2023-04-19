@@ -20,11 +20,13 @@ export const ValidationSchemaSignIn = (props: Props) => {
 export const ValidationSchemaSignUp = (props: Props) => {
   return Yup.object().shape({
     profile: Yup.string().required("Please select profile"),
-    name: Yup.string()
+    fullname: Yup.string()
       .min(2, "Too Short !")
       .max(50, "Too Long!")
       .required("Please enter your name"),
-    dob: Yup.string().required("DOB is required"),
+    dd: Yup.string().required("dd "),
+    mm: Yup.string().required("mm"),
+    yyyy: Yup.string().required("yyyy"),
     religion: Yup.string().required("Please select religion"),
     motherTongue: Yup.string().required("Please select mother tongue"),
     username: Yup.string()

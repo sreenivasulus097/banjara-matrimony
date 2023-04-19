@@ -2,14 +2,26 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { ValidationSchemaSignIn } from "./ValidationSchema";
 import LoginErrorMessage from "./LoginErrorMessage";
+import axios from "axios";
 
 interface Values {
   username: string;
   password: string;
 }
 
-const signInHandler = (formValues = {}) => {
+const signInHandler = async (formValues: Values) => {
   console.log("sign in form values", formValues);
+  await axios
+    .post("http://localhost:5000/api/user/login", {
+      user_id: formValues.username,
+      password: formValues.password,
+    })
+    .then((res) => {
+      console.log("response:", res.data);
+    })
+    .catch((err) => {
+      console.log("error in request", err);
+    });
 };
 
 const SignIn = () => {
@@ -27,8 +39,8 @@ const SignIn = () => {
           <div className="w-full md:w-1/3 mb-2 md:mb-0 md:mr-5">
             <Field
               className="w-[100%] h-10 max-w-xs p-1.5 rounded-md border border-gray-300"
-              id="usrname"
-              name="usrname"
+              id="username"
+              name="username"
               placeholder="Matrimony ID / Mobile No. / E-mail"
             />
             <LoginErrorMessage

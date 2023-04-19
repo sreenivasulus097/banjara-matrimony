@@ -3,12 +3,43 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { ValidationSchemaSignUp } from "./ValidationSchema";
 import LoginErrorMessage from "./LoginErrorMessage";
+import axios from "axios";
 
-type Props = {};
+interface Values {
+  profile: string;
+  fullname: string;
+  dd: string;
+  mm: string;
+  yyyy: string;
+  religion: string;
+  motherTongue: string;
+  username: string;
+  password: string;
+}
 
-const signUpHandler = () => {};
+const signUpHandler = async (formValues: Values) => {
+  console.log("sign up form values", formValues);
+  await axios
+    .post("http://localhost:5000/api/user/signup", {
+      profile_for: formValues.profile,
+      name: formValues.fullname,
+      dob: `${formValues.yyyy}-${formValues.mm}-${formValues.dd}T00:00:00.000+00:00`,
+      //"2014-01-22T14:56:59.301Z",
 
-const SignUp = (props: Props) => {
+      religion: formValues.religion,
+      mother_tongue: formValues.motherTongue,
+      user_id: formValues.username,
+      password: formValues.password,
+    })
+    .then((res) => {
+      console.log("response:", res.data);
+    })
+    .catch((err) => {
+      console.log("error in request", err);
+    });
+};
+
+const SignUp = () => {
   return (
     <div className=" container-xl  pb-0 self-center flex">
       <div className="relative">
@@ -21,11 +52,21 @@ const SignUp = (props: Props) => {
       </div>
       <div className="absolute ml-[50%] my-4 border border-solid bg-white rounded-md">
         <Formik
-          initialValues={{ username: "", password: "" }}
+          initialValues={{
+            profile: "",
+            fullname: "",
+            dd: "",
+            mm: "",
+            yyyy: "",
+            religion: "",
+            motherTongue: "",
+            username: "",
+            password: "",
+          }}
           validationSchema={ValidationSchemaSignUp}
           onSubmit={(values, actions) => {
             console.log("form values", values, actions);
-            signUpHandler();
+            signUpHandler(values);
           }}
         >
           {({ errors, touched, isValid, dirty }) => (
@@ -41,6 +82,7 @@ const SignUp = (props: Props) => {
                   as="select"
                   className="w-[40%]  p-1 border-2 border-solid rounded border-gray-400 text-sm"
                   name="profile"
+                  id="profile"
                 >
                   <option value="Religion">Select Matrimony Profile for</option>
                   <option value="Hindu">Hindu</option>
@@ -57,8 +99,8 @@ const SignUp = (props: Props) => {
                   <option value="Inter-Religion">Inter-Religion</option>
                 </Field>
                 <LoginErrorMessage
-                  errorVal={touched.username}
-                  errorMsg={errors.username}
+                  errorVal={touched.profile}
+                  errorMsg={errors.profile}
                 />
               </div>
               <div className="w-full flex mb-2 items-center ">
@@ -72,8 +114,8 @@ const SignUp = (props: Props) => {
                   name="fullname"
                 />
                 <LoginErrorMessage
-                  errorVal={touched.username}
-                  errorMsg={errors.username}
+                  errorVal={touched.fullname}
+                  errorMsg={errors.fullname}
                 />
               </div>
               <div className="w-full flex mb-2 items-center ">
@@ -83,30 +125,41 @@ const SignUp = (props: Props) => {
                 <Field
                   className="w-[10%]  p-1 border-2 border-solid rounded border-gray-400 text-sm mr-1"
                   as="select"
-                  id="dob"
-                  name="dob"
+                  id="dd"
+                  name="dd"
                 >
                   <option value="dd">dd</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
                 </Field>
+                <LoginErrorMessage errorVal={touched.dd} errorMsg={errors.dd} />
                 <Field
                   className="w-[10%]  p-1 border-2 border-solid rounded border-gray-400 text-sm mr-1"
                   as="select"
-                  id="dob"
-                  name="dob"
+                  id="mm"
+                  name="mm"
                 >
                   <option value="mm">mm</option>
+                  <option value="03">03</option>
+                  <option value="05">05</option>
+                  <option value="12">12</option>
                 </Field>
+                <LoginErrorMessage errorVal={touched.mm} errorMsg={errors.mm} />
                 <Field
-                  className="w-[10%]  p-1 border-2 border-solid rounded border-gray-400 text-sm mr-1"
+                  className="w-[13%]  p-1 border-2 border-solid rounded border-gray-400 text-sm mr-1"
                   as="select"
-                  id="dob"
-                  name="dob"
+                  id="yyyy"
+                  name="yyyy"
                 >
-                  <option value="yy">yy</option>
+                  <option value="yyyy">yyyy</option>
+                  <option value="1990">1990</option>
+                  <option value="1993">1993</option>
+                  <option value="1995">1995</option>
                 </Field>
                 <LoginErrorMessage
-                  errorVal={touched.username}
-                  errorMsg={errors.username}
+                  errorVal={touched.yyyy}
+                  errorMsg={errors.yyyy}
                 />
               </div>
               <div className="w-full flex mb-2 items-center">
@@ -120,10 +173,12 @@ const SignUp = (props: Props) => {
                   className="w-[40%]  p-1 border-2 border-solid rounded border-gray-400 text-sm"
                 >
                   <option value="dd">religion</option>
+                  <option value="hindu">hindu</option>
+                  <option value="muslim">muslim</option>
                 </Field>
                 <LoginErrorMessage
-                  errorVal={touched.username}
-                  errorMsg={errors.username}
+                  errorVal={touched.religion}
+                  errorMsg={errors.religion}
                 />
               </div>
               <div className="w-full flex mb-2 items-center">
@@ -133,14 +188,16 @@ const SignUp = (props: Props) => {
                 <Field
                   className="w-[40%]  p-1 border-2 border-solid rounded border-gray-400 text-sm"
                   as="select"
-                  id="mother-tongue"
-                  name="mother-tongue"
+                  id="motherTongue"
+                  name="motherTongue"
                 >
                   <option value="dd">mother-tongue</option>
+                  <option value="telugu">Telugu</option>
+                  <option value="tamil">Tamil</option>
                 </Field>
                 <LoginErrorMessage
-                  errorVal={touched.username}
-                  errorMsg={errors.username}
+                  errorVal={touched.motherTongue}
+                  errorMsg={errors.motherTongue}
                 />
               </div>
               <div className="w-full flex mb-2 items-center">
@@ -149,8 +206,8 @@ const SignUp = (props: Props) => {
                 </label>
                 <Field
                   type="text"
-                  id="email"
-                  name="email"
+                  id="username"
+                  name="username"
                   className="w-[40%]  p-1 border-2 border-solid rounded border-gray-400 text-sm"
                 ></Field>
                 <LoginErrorMessage
